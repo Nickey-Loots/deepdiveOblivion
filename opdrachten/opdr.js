@@ -1,0 +1,1 @@
+document.getElementById("opdracht").addEventListener("click");
