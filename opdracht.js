@@ -42,12 +42,6 @@ function toonLocatieInfo() {
     document.getElementById("locatiecode").innerText = `Locatie: ${locatie.naam}`;
     document.getElementById("opdracht").innerText = "Wachten op juiste locatie...";
 
-    if (TESTMODUS) {
-        document.getElementById("opdracht").innerText = locatie.opdracht + " (testmodus)";
-        document.getElementById("upload-btn").style.display = "inline-block";
-        return;
-    }
-
     navigator.geolocation.getCurrentPosition(pos => {
         const userLat = pos.coords.latitude;
         const userLon = pos.coords.longitude;
