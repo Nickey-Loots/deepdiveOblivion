@@ -28,11 +28,12 @@ ob_end_flush(); // Stuur output nu naar de browser
 <!-- === HTML FORMULIER MET LOCATIE === -->
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Foto inleverformulier met GPS</title>
     <script>
-        // Vraag locatie op bij laden van de pagina
         window.onload = function() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(pos) {
@@ -46,24 +47,55 @@ ob_end_flush(); // Stuur output nu naar de browser
             }
         };
     </script>
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #000000;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Lever je opdrachtfoto in</h1>
-    <form action="upload.php" method="post" enctype="multipart/form-data">
-        <label for="naam">Je naam:</label><br>
-        <input type="text" name="naam" id="naam" required><br><br>
 
-        <label for="opdracht">Opdracht:</label><br>
-        <input type="text" name="opdracht" id="opdracht" required><br><br>
+    <nav class="bg-black">
+        <div class="max-w-7xl mx-auto px-4 py-4 text-center">
+            <div class="text-xl font-bold text-yellow-300">Noorderpoort Stadsbingo</div>
+        </div>
+    </nav>
 
-        <label for="foto">Upload je foto:</label><br>
-        <input type="file" name="bestand" id="foto" accept="image/*" required><br><br>
+    <div class="max-w-xl mx-auto mt-10 p-6 bg-white border border-yellow-400 rounded-lg shadow space-y-6">
+        <h1 class="text-2xl font-bold text-black">Lever je opdrachtfoto in</h1>
 
-        <!-- Verborgen velden voor GPS -->
-        <input type="hidden" name="latitude" id="latitude">
-        <input type="hidden" name="longitude" id="longitude">
+        <form action="upload.php" method="post" enctype="multipart/form-data" class="space-y-4">
+            <div>
+                <label for="naam" class="block font-medium text-black">Je naam:</label>
+                <input type="text" name="naam" id="naam" required
+                    class="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400">
+            </div>
 
-        <input type="submit" value="Verzenden">
-    </form>
+            <div>
+                <label for="opdracht" class="block font-medium text-black">Opdracht:</label>
+                <input type="text" name="opdracht" id="opdracht" required
+                    class="w-full mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400">
+            </div>
+
+            <div>
+                <label for="foto" class="block font-medium text-black">Upload je foto:</label>
+                <input type="file" name="foto" id="foto" accept="image/*" required
+                    class="mt-1 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-yellow-400 file:text-black hover:file:bg-yellow-500">
+            </div>
+
+            <input type="hidden" name="latitude" id="latitude">
+            <input type="hidden" name="longitude" id="longitude">
+
+            <button type="submit"
+                class="bg-yellow-400 text-black font-semibold py-2 px-4 rounded hover:bg-yellow-500 transition cursor-pointer">
+                Verzenden
+            </button>
+
+        </form>
+    </div>
+
 </body>
+
 </html>

@@ -36,7 +36,7 @@
             inleverformulier</a>
     </div>
 
-    <script src="opdr.js"></script>
+    <script src="opdracht.js"></script>
 
 </body>
 
