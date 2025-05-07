@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['bestand'])) {
 
     if (move_uploaded_file($bestand['tmp_name'], $doelPad)) {
         // ✅ Upload gelukt, redirect naar volgende opdracht
-        header("Location: opdracht.php?voltooid=1");
+        header("Location: index.php?voltooid=1");
         exit;
     } else {
         echo "Er is iets misgegaan bij het uploaden.";
@@ -34,12 +34,12 @@ ob_end_flush(); // Stuur output nu naar de browser
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Foto inleverformulier met GPS</title>
     <script>
-        window.onload = function() {
+        window.onload = function () {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(pos) {
+                navigator.geolocation.getCurrentPosition(function (pos) {
                     document.getElementById('latitude').value = pos.coords.latitude;
                     document.getElementById('longitude').value = pos.coords.longitude;
-                }, function(error) {
+                }, function (error) {
                     console.warn("Locatie niet beschikbaar: ", error.message);
                 });
             } else {

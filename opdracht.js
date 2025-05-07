@@ -1,19 +1,21 @@
-
-const TESTMODUS = new URLSearchParams(window.location.search).get("test") === "1";
-
 // ------------------------------------------
 
 const locaties = [
-    { naam: "Station", lat: 53.2106, lon: 6.5666, opdracht: "ga naar de lantaarnpaal binnen en maak een kring. Maak hier vervolgens een foto van." },
-    { naam: "IKEA", lat: 53.2400, lon: 6.6006, opdracht: "Maak een foto van duurste kussen" },
-    { naam: "Prinsentuin", lat: 53.2211, lon: 6.5735, opdracht: "Maak een foto van een symmetrisch patroon in de tuin." },
-    { naam: "UMCG", lat: 53.2196, lon: 6.5744, opdracht: "Doe de YMCA maar dan de UMCG. Maak hier een video van." },
-    { naam: "Martinitoren", lat: 53.2194, lon: 6.5683, opdracht: "Maak een foto alsof je de toren vast hebt, net als ze bij de toren van Pisa doen" },
-    { naam: "Groninger Forum", lat: 53.2180, lon: 6.5681, opdracht: "Maak een groepsfoto met de Martinitoren op de achtergrond vanaf het dakterras" }
+    { naam: "Station", lat: 53.21124356149085, lon: 6.564106259019599, opdracht: "ga naar de lantaarnpaal binnen en maak een kring. Maak hier vervolgens een foto van." },
+    { naam: "IKEA", lat: 53.21743554020972, lon: 6.587921863354231, opdracht: "Maak een foto van duurste kussen" },
+    { naam: "Prinsentuin", lat: 53.22158492618018, lon: 6.5691379420181875, opdracht: "Maak een foto van een symmetrisch patroon in de tuin." },
+    { naam: "UMCG", lat: 53.22108957132685, lon: 6.577004649026435, opdracht: "Doe de YMCA maar dan de UMCG. Maak hier een video van." },
+    { naam: "Martinitoren", lat: 53.21929986992094, lon: 6.5678987592666696, opdracht: "Maak een foto alsof je de toren vast hebt, net als ze bij de toren van Pisa doen" },
+    { naam: "Groninger Forum", lat: 53.21873995007526, lon: 6.5703098768129875, opdracht: "Maak een groepsfoto met de Martinitoren op de achtergrond vanaf het dakterras" }
 ];
 
 const route = [locaties[0], ...shuffle(locaties.slice(1, -1)), locaties[locaties.length - 1]];
 let huidigeIndex = 0;
+
+// Voeg dit toe om de route beschikbaar te maken
+if (typeof window !== "undefined") {
+    window.randomRoute = route;
+}
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -74,11 +76,6 @@ function volgende() {
 }
 
 window.onload = () => {
-    if (new URLSearchParams(window.location.search).get("voltooid") === "1") {
-        volgende();
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
-
     toonLocatieInfo();
     setInterval(toonLocatieInfo, 5000);
 };

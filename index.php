@@ -1,80 +1,46 @@
-<?php
-// pas hier locaties aan
-$waypoints = [
-    [53.21124356149085, 6.564106259019599],
-    [53.21743554020972, 6.587921863354231],
-    [53.22108957132685, 6.577004649026435],
-    [53.22158492618018, 6.5691379420181875],
-    [53.21929986992094, 6.5678987592666696],
-    [53.21873995007526, 6.5703098768129875]
-];
-$apiKey = '5b3ce3597851110001cf6248f327d64ee5e8476b8d77831febc00fd0';
-?>
 <!DOCTYPE html>
-<html>
+<html lang="nl">
+
 <head>
-    <title>ORS Walking Route</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Noorderpoort Bingo</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        #map { height: 100vh; }
+        body {
+            background-color: #ffffff;
+            color: #000000;
+        }
     </style>
 </head>
+
 <body>
 
-<div id="map"></div>
+    <nav class="bg-black">
+        <div class="max-w-7xl mx-auto px-4 py-4 text-center">
+            <div class="text-xl font-bold text-yellow-300">Noorderpoort Stadsbingo</div>
+        </div>
+    </nav>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-xl shadow space-y-4 border border-yellow-300">
+        <h1 class="text-2xl font-bold text-black">Opdracht op jouw locatie</h1>
+        <p class="text-gray-700">Zodra je locatie is bepaald verschijnt hier jouw opdracht</p>
 
-<script>
-    const map = L.map('map').setView([53.2197, 6.5681], 14);
+        <div id="opdracht-container" class="mt-4 p-4 bg-yellow-100 border-2 border-yellow-300 rounded">
+            <div id="locatie" class="font-bold text-black text-xl mb-2"></div>
+            <p id="locatiecode" class="text-lg text-black font-semibold mt-2">Locatie wordt geladen...</p>
+            <p id="opdracht" class="text-lg font-semibold text-black">Laden...</p>
+        </div>
+        <a id="upload-btn" href="./upload.php"
+            class="text-white bg-yellow-300 hover:bg-yellow-400 focus:outline-none font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2">Naar
+            inleverformulier</a>
+    </div>
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+    
 
-    const coordinates = <?php echo json_encode($waypoints); ?>;
-    const orsApiKey = '<?php echo $apiKey; ?>';
+    <script src="opdracht.js"></script>
 
-    coordinates.forEach((coord, index) => {
-        L.marker([coord[0], coord[1]])
-         .addTo(map)
-         .bindPopup("Waypoint " + (index + 1));
-    });
-
-    const orsCoords = coordinates.map(c => [c[1], c[0]]);
-
-    async function fetchRoute() {
-        try {
-            const response = await fetch('https://api.openrouteservice.org/v2/directions/foot-walking/geojson', {
-                method: 'POST',
-                headers: {
-                    'Authorization': orsApiKey,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    coordinates: orsCoords
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            const geojson = L.geoJSON(data, {
-                style: { color: 'blue', weight: 4 }
-            }).addTo(map);
-            map.fitBounds(geojson.getBounds());
-        } catch (err) {
-            console.error('ORS Error:', err);
-        }
-    }
-
-    fetchRoute();
-</script>
-
+    <?php require_once 'kaart.php' ?>
 </body>
+
 </html>
