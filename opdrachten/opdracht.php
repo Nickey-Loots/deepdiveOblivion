@@ -2,7 +2,7 @@
 <html lang="nl">
 
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Noorderpoort Bingo</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -27,10 +27,14 @@
         <p class="text-gray-700">Zodra je locatie is bepaald verschijnt hier jouw opdracht</p>
 
         <div id="opdracht-container" class="mt-4 p-4 bg-yellow-100 border-2 border-yellow-300 rounded">
+            <div id="locatie" class="font-bold text-black text-xl mb-2"></div>
+            <p id="locatiecode" class="text-lg text-black font-semibold mt-2">Locatie wordt geladen...</p>
             <p id="opdracht" class="text-lg font-semibold text-black">Laden...</p>
         </div>
-        <a href="../maikel/upload.php" class="text-white bg-yellow-300 hover:bg-yellow-400 focus:outline-none font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2">Naar inleverformulier</a>
-      </div>
+        <a id="upload-btn" href="./upload.php"
+            class="text-white bg-yellow-300 hover:bg-yellow-400 focus:outline-none font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2">Naar
+            inleverformulier</a>
+    </div>
 
     <script src="opdr.js"></script>
 
