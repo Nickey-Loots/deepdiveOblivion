@@ -19,11 +19,11 @@ $apiKey = '5b3ce3597851110001cf6248f327d64ee5e8476b8d77831febc00fd0';
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         #map { 
-            height: 50vh; /* Verlaag de hoogte naar 50% van de viewport */
-            width: 80%;   /* Stel de breedte in op 80% van de pagina */
-            margin: 20px auto; /* Centreer de kaart horizontaal en voeg wat marge toe */
-            border: 2px solid #ccc; /* Voeg een rand toe voor een nette uitstraling */
-            border-radius: 8px; /* Maak de hoeken afgerond */
+            height: 50vh;
+            width: 80%;
+            margin: 20px auto;
+            border: 2px solid #ccc;
+            border-radius: 8px;
         }
     </style>
 </head>
