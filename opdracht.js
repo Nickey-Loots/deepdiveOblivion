@@ -1,5 +1,5 @@
 const locaties = [
-    { naam: "Station", lat: 53.203798562452974, lon: 6.563510221120527, opdracht: "ga naar de lantaarnpaal binnen en maak een kring. Maak hier vervolgens een foto van." },
+    { naam: "Station", lat: 53.21124356149085, lon: 6.564106259019599, opdracht: "ga naar de lantaarnpaal binnen en maak een kring. Maak hier vervolgens een foto van." },
     { naam: "IKEA", lat: 53.21743554020972, lon: 6.587921863354231, opdracht: "Maak een foto van duurste kussen" },
     { naam: "Prinsentuin", lat: 53.22158492618018, lon: 6.5691379420181875, opdracht: "Maak een foto van een symmetrisch patroon in de tuin." },
     { naam: "UMCG", lat: 53.22108957132685, lon: 6.577004649026435, opdracht: "Doe de YMCA maar dan de UMCG. Maak hier een video van." },

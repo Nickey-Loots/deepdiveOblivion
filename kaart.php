@@ -46,7 +46,7 @@ $apiKey = '5b3ce3597851110001cf6248f327d64ee5e8476b8d77831febc00fd0';
     randomRoute.forEach((locatie, index) => {
         L.marker([locatie.lat, locatie.lon])
          .addTo(map)
-         .bindPopup((locatie[2]));
+         .bindPopup((locatie.naam));
     });
 
     const orsCoords = randomRoute.map(loc => [loc.lon, loc.lat]);
