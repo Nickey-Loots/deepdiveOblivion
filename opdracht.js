@@ -1,3 +1,5 @@
+// hier kun je de opdrachten en locaties aanpassen naar wat je zelf maar wil.
+// De eerste Locatie in de array is altijd het beginpunt, de laatste value altijd je eindpoint.
 const locaties = [
     { naam: "Station", lat: 53.21124356149085, lon: 6.564106259019599, opdracht: "ga naar de lantaarnpaal binnen en maak een kring. Maak hier vervolgens een foto van." },
     { naam: "IKEA", lat: 53.21743554020972, lon: 6.587921863354231, opdracht: "Maak een foto van duurste kussen" },
