@@ -36,11 +36,20 @@
             inleverformulier</a>
     </div>
 
-    
+
 
     <script src="opdracht.js"></script>
 
     <?php require_once 'kaart.php' ?>
+    <?php if (isset($_GET['voltooid'])): ?>
+        <script>
+            window.addEventListener("DOMContentLoaded", () => {
+                if (typeof volgende === "function") {
+                    volgende();
+                }
+            });
+        </script>
+    <?php endif; ?>
 </body>
 
 </html>

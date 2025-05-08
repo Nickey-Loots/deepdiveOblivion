@@ -1,7 +1,5 @@
-// ------------------------------------------
-
 const locaties = [
-    { naam: "Station", lat: 53.21124356149085, lon: 6.564106259019599, opdracht: "ga naar de lantaarnpaal binnen en maak een kring. Maak hier vervolgens een foto van." },
+    { naam: "Station", lat: 53.203798562452974, lon: 6.563510221120527, opdracht: "ga naar de lantaarnpaal binnen en maak een kring. Maak hier vervolgens een foto van." },
     { naam: "IKEA", lat: 53.21743554020972, lon: 6.587921863354231, opdracht: "Maak een foto van duurste kussen" },
     { naam: "Prinsentuin", lat: 53.22158492618018, lon: 6.5691379420181875, opdracht: "Maak een foto van een symmetrisch patroon in de tuin." },
     { naam: "UMCG", lat: 53.22108957132685, lon: 6.577004649026435, opdracht: "Doe de YMCA maar dan de UMCG. Maak hier een video van." },
@@ -10,9 +8,10 @@ const locaties = [
 ];
 
 const route = [locaties[0], ...shuffle(locaties.slice(1, -1)), locaties[locaties.length - 1]];
-let huidigeIndex = 0;
 
-// Voeg dit toe om de route beschikbaar te maken
+let opgeslagenIndex = parseInt(sessionStorage.getItem("huidigeIndex"), 10);
+let huidigeIndex = Number.isInteger(opgeslagenIndex) && opgeslagenIndex >= 0 ? opgeslagenIndex : 0;
+
 if (typeof window !== "undefined") {
     window.randomRoute = route;
 }
@@ -36,30 +35,41 @@ function isDichtbij(lat1, lon1, lat2, lon2, maxAfstand = 100) {
     return R * c < maxAfstand;
 }
 
+let opLocatie = false;
+
 function toonLocatieInfo() {
     const locatie = route[huidigeIndex];
-
     document.getElementById("locatiecode").innerText = `Locatie: ${locatie.naam}`;
-    document.getElementById("opdracht").innerText = "Wachten op juiste locatie...";
 
     navigator.geolocation.getCurrentPosition(pos => {
         const userLat = pos.coords.latitude;
         const userLon = pos.coords.longitude;
 
-        if (isDichtbij(userLat, userLon, locatie.lat, locatie.lon)) {
+        const dichtbij = isDichtbij(userLat, userLon, locatie.lat, locatie.lon);
+
+        if (dichtbij && !opLocatie) {
+            opLocatie = true;
             document.getElementById("opdracht").innerText = locatie.opdracht;
-            document.getElementById("upload-btn").style.display = "inline-block";
-        } else {
+            document.getElementById("upload-btn").classList.remove("hidden");
+        } else if (!dichtbij && opLocatie) {
+            opLocatie = false;
             document.getElementById("opdracht").innerText = "Je bent nog niet op de juiste locatie.";
-            document.getElementById("upload-btn").style.display = "none";
+            document.getElementById("upload-btn").classList.add("hidden");
+        } else if (!dichtbij && !opLocatie) {
+            document.getElementById("opdracht").innerText = "Je bent nog niet op de juiste locatie.";
+            document.getElementById("upload-btn").classList.add("hidden");
         }
     }, () => {
         document.getElementById("opdracht").innerText = "Locatie kon niet worden bepaald.";
+        document.getElementById("upload-btn").classList.add("hidden");
+        opLocatie = false;
     });
 }
 
 function volgende() {
     huidigeIndex++;
+    sessionStorage.setItem("huidigeIndex", huidigeIndex);
+
     if (huidigeIndex >= route.length) {
         document.getElementById("opdracht").innerText = "Route voltooid!";
         document.getElementById("locatiecode").innerText = "";
@@ -70,6 +80,21 @@ function volgende() {
 }
 
 window.onload = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.get("reset") === "1") {
+        sessionStorage.setItem("huidigeIndex", "0");
+        huidigeIndex = 0;
+    }
+
     toonLocatieInfo();
-    setInterval(toonLocatieInfo, 5000);
+
+    if (urlParams.get("voltooid") === "1") {
+        volgende();
+        history.replaceState(null, "", "index.php");
+    }
+
+    document.getElementById("upload-btn").classList.add("hidden");
+
+    setInterval(toonLocatieInfo, 60000);
 };
