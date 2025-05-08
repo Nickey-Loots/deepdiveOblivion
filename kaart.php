@@ -76,6 +76,33 @@ $apiKey = '5b3ce3597851110001cf6248f327d64ee5e8476b8d77831febc00fd0';
         } catch (err) {
             console.error('ORS Error:', err);
         }
+
+        let userMarker;
+
+    function onLocationFound(e) {
+        const radius = e.accuracy / 2;
+
+        if (!userMarker) {
+            userMarker = L.circleMarker(e.latlng, {
+                radius: 8,
+                fillColor: "#3388ff",
+                color: "#fff",
+                weight: 2,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).addTo(map).bindPopup("Je bent hier").openPopup();
+        } else {
+            userMarker.setLatLng(e.latlng);
+        }
+        }
+
+        function onLocationError(e) {
+        console.error("Locatie fout:", e.message);
+        }
+
+            map.locate({watch: true, setView: false, enableHighAccuracy: true});
+            map.on('locationfound', onLocationFound);
+            map.on('locationerror', onLocationError);
     }
 
     fetchRoute();
